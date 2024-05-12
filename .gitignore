@@ -128,3 +128,13 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+.angular
+.nx
+GUI/node_modules/
+GUI/.angular
+
+Server/myenv
+Server/__pycache__
+Server/app/__pycache__
+Server/transactions.db
