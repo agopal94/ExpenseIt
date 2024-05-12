@@ -28,6 +28,15 @@
               <ion-input [value]="newValue" (input)="setValue($event)" label="Value" type="number"
                 placeholder="100.0"></ion-input>
             </ion-item>
+            <ion-item>
+              <ion-label> Transaction Date </ion-label>
+              <ion-datetime-button datetime="datetime"></ion-datetime-button>
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime (ionChange)="onDateSelect($event)" id="datetime" presentation="date"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+            </ion-item>
             <ion-button size="large" style="float: right;padding-top: 15px;" (click)="saveTransaction()">
               <ion-icon slot="icon-only" md="save"></ion-icon>
             </ion-button>

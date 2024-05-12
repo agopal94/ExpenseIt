@@ -1,8 +1,9 @@
 from typing import Union
 from database import create_db,insert_category,get_all_categories,delete_category,insert_transaction,get_all_transactions,delete_transaction_by_id
-from fastapi import FastAPI,APIRouter, status
+from fastapi import FastAPI,APIRouter, status, UploadFile
 import uvicorn 
 from pydantic import BaseModel
+from starlette.responses import FileResponse
 
 app = FastAPI()
 router = APIRouter()
@@ -13,6 +14,7 @@ class CategoryRequest(BaseModel):
 class TransactionRequest(BaseModel):
     guid: str
     type: str
+    ts: str
     category: str
     value: float
 
@@ -44,6 +46,19 @@ def delete_transaction(id: str):
 def init_db():
     create_db()
     return {"message": "DB Init Successful"}
+
+@app.get("/api/getdbfile")
+def get_db_file():
+    return FileResponse("./transactions.db", media_type='application/octet-stream',filename="transactions.db")
+
+@app.post("/api/setdbfile/")
+async def create_upload_file(file: UploadFile):
+    file_location = f"./{file.filename}"
+    with open(file_location, "wb+") as file_object:
+        file_object.write(file.file.read())
+    return {"info": f"file '{file.filename}' saved at '{file_location}'"}
+
+    return {"Result": "OK"}
 
 @app.get("/api/healthchecker")
 def root():

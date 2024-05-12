@@ -16,6 +16,7 @@ export class HomePage {
   public newCategory: string = "";
   public newValue: number = 0;
   public availableCategories: string[] = [];
+  public selectedDate: string = '';
 
 
   constructor(private svc: TransactionService) {
@@ -28,6 +29,7 @@ export class HomePage {
       category: this.newCategory,
       type: this.newTransactionType,
       value: this.newValue,
+      ts: this.selectedDate,
       guid: "NEW_TRANSACTION"
     };
     console.log(newTransaction);
@@ -36,6 +38,11 @@ export class HomePage {
       this.resetInputs();
       this.modal.dismiss();
     });
+  }
+
+  onDateSelect($event: any) {
+    console.log($event.detail.value);
+    this.selectedDate = $event.detail.value;
   }
 
   resetInputs() {

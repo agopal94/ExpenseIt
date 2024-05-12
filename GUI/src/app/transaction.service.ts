@@ -21,13 +21,21 @@ export class TransactionService {
   constructor(private http: HttpClient) {
   }
 
-  public getAllTransactions() {
-    return this.allTransactions;
+  public getAllTransactions(): Observable<any> {
+    return this.http.get("/api/v1/api/transaction/getall").pipe(map((r: any) => {
+      this.allTransactions = r;
+      return this.allTransactions;
+    }));
   }
 
   public addTransaction(newTransaction: Transaction) {
     newTransaction.guid = uuid.v4();
-    return this.http.post("/api/v1/api/transaction", newTransaction, httpOptions);
+    return this.http.post("/api/v1/api/transaction", newTransaction, httpOptions).pipe(map((r) => {
+      this.getAllTransactions().subscribe((r) => {
+        console.log("All Transactions Refreshed");
+      });
+      return r;
+    }));
   }
 
   public addCategory(cat: string) {

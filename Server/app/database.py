@@ -87,7 +87,7 @@ def insert_transaction(catReq):
     # create a new database session
     session = Session(bind=engine, expire_on_commit=False)
     # create an instance of the ToDo database model
-    transactiondb = Transaction(guid = catReq.guid, type = catReq.type, category = catReq.category, value = catReq.value)
+    transactiondb = Transaction(guid = catReq.guid, type = catReq.type, category = catReq.category, value = catReq.value, ts= catReq.ts)
     # add it to the session and commit it
     session.add(transactiondb)
     session.commit()
@@ -108,6 +108,7 @@ class Transaction(Base):
     __tablename__ = "transactions"
     guid = Column(String(100), primary_key=True)
     type = Column(String(100))
+    ts = Column(String(100))
     category = Column(String(100), ForeignKey(Category.cat))
     value = Column(Float)
 
