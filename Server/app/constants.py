@@ -1,0 +1,1 @@
+DB_FILE_PATH = "./expenseit.db"

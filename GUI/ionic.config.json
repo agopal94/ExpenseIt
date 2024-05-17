@@ -1,7 +1,0 @@
-{
-  "name": "ExpenseIt",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}

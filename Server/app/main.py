@@ -4,6 +4,9 @@ from fastapi import FastAPI,APIRouter, status, UploadFile
 import uvicorn 
 from pydantic import BaseModel
 from starlette.responses import FileResponse
+from constants import DB_FILE_PATH
+import os.path
+import time
 
 app = FastAPI()
 router = APIRouter()
@@ -17,6 +20,14 @@ class TransactionRequest(BaseModel):
     ts: str
     category: str
     value: float
+
+@app.get("/api/bootstrap")
+def bootstrap_app():
+    if os.path.isfile(DB_FILE_PATH):
+        return True
+    else:
+        return False
+
 
 @app.post("/api/category", status_code=status.HTTP_201_CREATED)
 def create_category(cat: CategoryRequest):
