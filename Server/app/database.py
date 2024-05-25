@@ -2,8 +2,9 @@ from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy import Column, Integer, String, Float
+from constants import DB_FILE_PATH
 
-SQLITE_DATABASE_URL = "sqlite:///./transactions.db"
+SQLITE_DATABASE_URL = "sqlite:///" + DB_FILE_PATH
 
 engine = create_engine(
     SQLITE_DATABASE_URL, echo=True, connect_args={"check_same_thread": False}
@@ -20,6 +21,31 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+class Accounts(Base):
+    __tablename__ = "accounts"
+    id = Column(Integer, primary_key=True)
+    type = Column(String(100))
+    opening_balance = Column(Float)
+
+def db_get_all_accounts():
+    # create a new database session
+    session = Session(bind=engine, expire_on_commit=False)
+    # get the todo item with the given id
+    all_acc = session.query(Accounts).all()
+    # close the session
+    session.close()
+    return all_acc
+
+def insert_account(new_acc):
+    session = Session(bind=engine, expire_on_commit=False)
+    accdb = Accounts(type = new_acc.accType, opening_balance = new_acc.openingBalance)
+    session.add(accdb)
+    session.commit()
+    id = accdb.id
+    session.close()
+    return f"created Account with id {id}"
 
 
 def get_all_categories():
@@ -83,21 +109,14 @@ def get_all_transactions():
     return all_transactions
 
 
-def insert_transaction(catReq):
-    # create a new database session
+def insert_transaction(transReq):
     session = Session(bind=engine, expire_on_commit=False)
-    # create an instance of the ToDo database model
-    transactiondb = Transaction(guid = catReq.guid, type = catReq.type, category = catReq.category, value = catReq.value, ts= catReq.ts)
-    # add it to the session and commit it
+    transactiondb = Transaction(guid = transReq.guid, type = transReq.type, category = transReq.category, value = transReq.value, ts= transReq.ts, acc_id=transReq.acc_id)
     session.add(transactiondb)
     session.commit()
-    # grab the id given to the object from the database
     id = transactiondb.guid
-    # close the session
     session.close()
-    # return the id
     return f"created transaction item with id {id}"
-
 
 class Category(Base):
     __tablename__ = "categories"
@@ -110,5 +129,6 @@ class Transaction(Base):
     type = Column(String(100))
     ts = Column(String(100))
     category = Column(String(100), ForeignKey(Category.cat))
+    acc_id = Column(Integer, ForeignKey(Accounts.id))
     value = Column(Float)
 

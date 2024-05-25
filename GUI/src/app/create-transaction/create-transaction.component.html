@@ -1,0 +1,61 @@
+<mat-card class="transaction-creation-card">
+    <mat-card-header>
+        <mat-card-title>Add New Transaction</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-form-field>
+            <mat-label>Account</mat-label>
+            <mat-select [(value)]="selectedAccount">
+                @for (acc of availableAccounts; track acc) {
+                    <mat-option value="{{acc.id}}">{{acc.type}}</mat-option>
+                 }
+            </mat-select>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field>
+            <mat-label>Category</mat-label>
+            <mat-select [(value)]="selectedCategory">
+                @for (cat of availableCategories; track cat) {
+                    <mat-option value="{{cat.cat}}">{{cat.cat}}</mat-option>
+                 }
+            </mat-select>
+        </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+        <mat-label>Type</mat-label>
+        <mat-select [(value)]="selectedType">
+            <mat-option value="INFLOW">Inflow</mat-option>
+            <mat-option value="OUTFLOW">Outflow</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field>
+        <mat-label>Amount</mat-label>
+        <input matInput type="number" [(ngModel)]="amount">
+    </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button (click)="onSubmit()">Submit</button>
+        <button mat-button (click)="onCancel()">Cancel</button>
+    </mat-card-actions>
+</mat-card>
+
+<mat-card class="category-creation-card">
+    <mat-card-header>
+        <mat-card-title>Add New Category</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-form-field>
+            <mat-label>Category</mat-label>
+            <input matInput type="text" [(ngModel)]="newCategoryValue">
+        </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button (click)="onSubmitCategory()">Submit</button>
+        <button mat-button (click)="onCancel()">Cancel</button>
+    </mat-card-actions>
+</mat-card>

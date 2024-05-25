@@ -26,10 +26,11 @@ export class AppComponent implements OnInit {
       if (res) {
         console.log("App Init Successful. Existing Data loaded.");
         this.showLoader = false;
+        this._router.navigateByUrl('home');
       } else if (res === false) {
         console.log("App Init Successful. No Existing Data found.");
         this.showLoader = false;
-        this._router.navigateByUrl('new-user')
+        this._router.navigateByUrl('new-user');
       }
     });
   }

@@ -1,5 +1,5 @@
 from typing import Union
-from database import create_db,insert_category,get_all_categories,delete_category,insert_transaction,get_all_transactions,delete_transaction_by_id
+from database import create_db,insert_category,get_all_categories,delete_category,insert_transaction,get_all_transactions,delete_transaction_by_id, db_get_all_accounts,insert_account
 from fastapi import FastAPI,APIRouter, status, UploadFile
 import uvicorn 
 from pydantic import BaseModel
@@ -20,6 +20,11 @@ class TransactionRequest(BaseModel):
     ts: str
     category: str
     value: float
+    acc_id: int
+
+class AccountRequest(BaseModel):
+    accType: str
+    openingBalance: float
 
 @app.get("/api/bootstrap")
 def bootstrap_app():
@@ -28,6 +33,13 @@ def bootstrap_app():
     else:
         return False
 
+@app.get("/api/account/getall")
+def get_all_accounts():
+    return db_get_all_accounts()
+
+@app.post("/api/account", status_code=status.HTTP_201_CREATED)
+def create_account(a: AccountRequest):
+    return insert_account(a)
 
 @app.post("/api/category", status_code=status.HTTP_201_CREATED)
 def create_category(cat: CategoryRequest):

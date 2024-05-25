@@ -15,4 +15,8 @@ export class BootstrapService {
     return this.http.get(environment.apiUrls.bootstrap);
   }
 
+  createNewDatabase(): Observable<any> {
+    return this.http.get(environment.apiUrls.createNewDB);
+  }
+
 }

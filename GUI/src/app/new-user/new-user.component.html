@@ -2,12 +2,12 @@
     <h1>Welcome to ExpenseIt.</h1>
     <h3>No User Data Found. Would you like to Import/Create New ?</h3>
 
-    <button mat-fab extended color="primary">
-        <mat-icon>favorite</mat-icon>
-        Primary
+    <button style="margin-right: 10px;" mat-fab extended color="primary" (click)="createNewDatabase()">
+        <mat-icon>add</mat-icon>
+        Create New
       </button>
       <button mat-fab extended color="accent">
-        <mat-icon>favorite</mat-icon>
-        Accent
+        <mat-icon>backup_table</mat-icon>
+        Import
       </button>
 </div>
