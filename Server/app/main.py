@@ -1,37 +1,24 @@
 from typing import Union
-from database import create_db,insert_category,get_all_categories,delete_category,insert_transaction,get_all_transactions,delete_transaction_by_id, db_get_all_accounts,insert_account
+from app.etc import database
 from fastapi import FastAPI,APIRouter, status, UploadFile
 import uvicorn 
 from pydantic import BaseModel
 from starlette.responses import FileResponse
-from constants import DB_FILE_PATH
+from app.etc.constants import DB_FILE_PATH
 import os.path
 import time
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 router = APIRouter()
 
-class CategoryRequest(BaseModel):
-    cat: str
+app.mount("/gui", StaticFiles(directory="gui"), name="gui")
 
-class TransactionRequest(BaseModel):
-    guid: str
-    type: str
-    ts: str
-    category: str
-    value: float
-    acc_id: int
+class MetadataRequest(BaseModel):
+    key: str
+    value: str
 
-class AccountRequest(BaseModel):
-    accType: str
-    openingBalance: float
-
-@app.get("/api/bootstrap")
-def bootstrap_app():
-    if os.path.isfile(DB_FILE_PATH):
-        return True
-    else:
-        return False
+'''
 
 @app.get("/api/account/getall")
 def get_all_accounts():
@@ -41,21 +28,7 @@ def get_all_accounts():
 def create_account(a: AccountRequest):
     return insert_account(a)
 
-@app.post("/api/category", status_code=status.HTTP_201_CREATED)
-def create_category(cat: CategoryRequest):
-    return insert_category(cat.cat)
 
-@app.get("/api/category/getall")
-def get_all_cats():
-    return get_all_categories()
-
-@app.delete("/api/category/{id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_cat(id: int):
-    return delete_category(id)
-
-@app.post("/api/transaction", status_code=status.HTTP_201_CREATED)
-def create_transaction(t: TransactionRequest):
-    return insert_transaction(t)
 
 @app.get("/api/transaction/getall")
 def get_all_trans():
@@ -64,19 +37,29 @@ def get_all_trans():
 @app.delete("/api/transaction/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_transaction(id: str):
     return delete_transaction_by_id(id)
+'''
+
+### Crit Methods ###
+
+@app.get("/api/bootstrap")
+def bootstrap_app():
+    if os.path.isfile(DB_FILE_PATH):
+        return True
+    else:
+        return False
 
 @app.get("/api/createdb")
 def init_db():
-    create_db()
+    database.create_db()
     return {"message": "DB Init Successful"}
 
 @app.get("/api/getdbfile")
 def get_db_file():
-    return FileResponse("./transactions.db", media_type='application/octet-stream',filename="transactions.db")
+    return FileResponse(DB_FILE_PATH, media_type='application/octet-stream',filename="expenseit.db")
 
 @app.post("/api/setdbfile/")
 async def create_upload_file(file: UploadFile):
-    file_location = f"./{file.filename}"
+    file_location = f"{DB_FILE_PATH}"
     with open(file_location, "wb+") as file_object:
         file_object.write(file.file.read())
     return {"info": f"file '{file.filename}' saved at '{file_location}'"}
@@ -86,6 +69,21 @@ async def create_upload_file(file: UploadFile):
 @app.get("/api/healthchecker")
 def root():
     return {"message": "Welcome to ExpenseIt Server!"}
+
+
+### Metadata Methods ###
+
+@app.post("/api/metadata", status_code=status.HTTP_201_CREATED)
+def create_metadata(metadata: MetadataRequest):
+    return database.insert_metadata(metadata)
+
+@app.get("/api/metadata/getall")
+def get_all_metadata():
+    return database.get_all_metadata()
+
+@app.delete("/api/metadata/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_metadata(id: int):
+    return database.delete_metadata(id)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

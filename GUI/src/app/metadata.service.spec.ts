@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CategoryService } from './category.service';
+import { MetadataService } from './metadata.service';
 
-describe('CategoryService', () => {
-  let service: CategoryService;
+describe('MetadataService', () => {
+  let service: MetadataService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CategoryService);
+    service = TestBed.inject(MetadataService);
   });
 
   it('should be created', () => {

@@ -45,4 +45,8 @@ $expense-it-theme: mat.define-light-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
+.mat-tab-body-wrapper, // angular < 16
+.mat-mdc-tab-body-wrapper // angular >= 16
+{
+  flex-grow: 1;
+}

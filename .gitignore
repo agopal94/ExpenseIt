@@ -138,3 +138,4 @@ Server/myenv
 Server/__pycache__
 Server/app/__pycache__
 Server/transactions.db
+Server/app/etc/__pycache__

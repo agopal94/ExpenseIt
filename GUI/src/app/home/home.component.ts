@@ -1,23 +1,19 @@
 import { Component } from '@angular/core';
 import { AccountsService } from '../accounts.service';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import { ControlBarComponent } from '../control-bar/control-bar.component';
 import {MatTabsModule} from '@angular/material/tabs';
-import { CategoryService } from '../category.service';
+import { MetadataService } from '../metadata.service';
 import { TransactionService } from '../transaction.service';
-import { AllTransactionsComponent } from '../all-transactions/all-transactions.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatToolbarModule, MatTabsModule, ControlBarComponent, AllTransactionsComponent],
+  imports: [MatToolbarModule, MatTabsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-
-
-  constructor(private accountSvc: AccountsService, private catSvc: CategoryService, private transSvc: TransactionService) {
+  constructor(private accountSvc: AccountsService, private catSvc: MetadataService, private transSvc: TransactionService) {
     this.initView();
   }
 
@@ -26,15 +22,8 @@ export class HomeComponent {
       console.warn(res);
     });
 
-    this.catSvc.getAllCategories().subscribe((res) => {
+    this.catSvc.getAllMetadata().subscribe((res) => {
       console.warn(res);
     });
-
-    this.transSvc.getAllTransactions().subscribe((res) => {
-      console.warn(res);
-    })
   }
-
-
-
 }

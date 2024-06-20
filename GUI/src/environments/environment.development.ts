@@ -5,8 +5,8 @@ export const environment = {
         createNewDB: '/local/api/createdb',
         getAllAccounts: '/local/api/account/getall',
         createAccount: '/local/api/account',
-        getAllCategories: '/local/api/category/getall',
-        createCategory: '/local/api/category',
+        getAllMetadata: '/local/api/metadata/getall',
+        createMetadata: '/local/api/metadata',
         getAllTransactions: '/local/api/transaction/getall',
         createTransaction: '/local/api/transaction'
     }

@@ -9,9 +9,10 @@ export interface AccountDB {
     opening_balance: number;
 }
 
-export interface CategoryDB {
+export interface MetadataDB {
     id: number;
-    cat: string;
+    key: string;
+    value: string;
 }
 
 export interface Transaction {
@@ -20,5 +21,5 @@ export interface Transaction {
     ts: string
     category: string
     value: number
-    acc_id: number | undefined
+    acc_id: number | undefined | string
 }
