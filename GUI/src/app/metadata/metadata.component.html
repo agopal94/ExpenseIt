@@ -1,0 +1,31 @@
+<div class="metadata-container container">
+    <div class="row">
+        <div class="col-md-9">
+            <ag-grid-angular class="metadata-grid ag-theme-quartz-dark" [rowData]="rowData" [gridOptions]="gridOptions" />
+        </div>
+        <div class="col-md-3 create-metadata-container">
+            <h3 style="margin-bottom: 0px;">Add New Metadata</h3>
+            <mat-divider></mat-divider>
+            <div class="metadata-add-form">
+                <mat-form-field>
+                  <mat-label>Type</mat-label>
+                  <input matInput placeholder="Ex. CCY" [(ngModel)]="newType">
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                  <mat-label>Value</mat-label>
+                  <input matInput placeholder="Ex. USD" [(ngModel)]="newValue">
+                </mat-form-field>
+                <br>
+                <mat-form-field>
+                  <mat-label>Key</mat-label>
+                  <input matInput placeholder="Ex. USD" [(ngModel)]="newKey">
+                </mat-form-field>
+                <br>
+                <button mat-fab aria-label="Save" style="float:right" (click)="saveMetadata()">
+                    <mat-icon>save</mat-icon>
+                  </button>
+                </div>
+        </div>
+    </div>
+</div>

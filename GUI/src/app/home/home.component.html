@@ -1,3 +1,22 @@
 <div class="app-header">
     <h2>ExpenseIt</h2>
 </div>
+<div class="nav-bar-container">
+    <mat-button-toggle-group [(ngModel)]="selectedView" aria-label="Nav Buttons" [hideSingleSelectionIndicator]="true" >
+      <mat-button-toggle value="ACCOUNTS">Accounts</mat-button-toggle>
+      <mat-button-toggle value="TRANSACTIONS">Transactions</mat-button-toggle>
+      <mat-button-toggle value="METADATA">Metadata</mat-button-toggle>
+    </mat-button-toggle-group>
+</div>
+<div class="view-container" *ngIf="initViewSuccess">
+    <div *ngIf="selectedView == 'ACCOUNTS'">
+        <p>Chosen value is accounts</p>
+    </div>
+    <div *ngIf="selectedView == 'TRANSACTIONS'">
+        <p>Chosen value is Transactions</p>
+    </div>
+    <div *ngIf="selectedView == 'METADATA'">
+        <metadata></metadata>
+    </div>
+</div>
+<spinner *ngIf="!initViewSuccess"></spinner>

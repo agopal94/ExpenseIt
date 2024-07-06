@@ -47,6 +47,16 @@ def insert_account(new_acc):
     session.close()
     return f"created Account with id {id}"
 
+def delete_account(id: int):
+    session = Session(bind=engine, expire_on_commit=False)
+    account = session.query(Accounts).get(id)
+    if account:
+        session.delete(account)
+        session.commit()
+        session.close()
+    else:
+        raise HTTPException(status_code=404, detail=f"metadata item with id {id} not found")
+    return None
 ## Metadata Table and Actions
 
 class Metadata(Base):
@@ -54,6 +64,7 @@ class Metadata(Base):
     id = Column(Integer, primary_key=True)
     key = Column(String(100))
     value = Column(String(100))
+    type = Column(String(100))
 
 def get_all_metadata():
     session = Session(bind=engine, expire_on_commit=False)
@@ -63,7 +74,7 @@ def get_all_metadata():
 
 def insert_metadata(metadata):
     session = Session(bind=engine, expire_on_commit=False)
-    meta_new_row = Metadata(key = metadata.key, value=metadata.value)
+    meta_new_row = Metadata(key = metadata.key, value=metadata.value, type=metadata.type)
     session.add(meta_new_row)
     session.commit()
     session.close()

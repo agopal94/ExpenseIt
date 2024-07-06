@@ -17,6 +17,13 @@ app.mount("/gui", StaticFiles(directory="gui"), name="gui")
 class MetadataRequest(BaseModel):
     key: str
     value: str
+    type: str
+
+class AccountRequest(BaseModel):
+    accType: str
+    ccy: str
+    name: str
+    openingBalance: float
 
 '''
 
@@ -84,6 +91,21 @@ def get_all_metadata():
 @app.delete("/api/metadata/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_metadata(id: int):
     return database.delete_metadata(id)
+
+
+### Account Methods ###
+
+@app.post("/api/account", status_code=status.HTTP_201_CREATED)
+def create_account(metadata: AccountRequest):
+    return database.create_account(metadata)
+
+@app.get("/api/account/getall")
+def get_all_accounts():
+    return database.db_get_all_accounts()
+
+@app.delete("/api/account/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_account(id: int):
+    return database.delete_account(id)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

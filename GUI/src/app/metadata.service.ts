@@ -21,8 +21,12 @@ export class MetadataService {
     }));
   }
 
-  public createNewMetadata(key: string, value: string) {
-    return this.http.post(environment.apiUrls.createMetadata, {key, value})
+  public createNewMetadata(key: string, value: string, type: string) {
+    return this.http.post(environment.apiUrls.createMetadata, {key, value, type});
+  }
+
+  public deleteMetadata(id: number) {
+    return this.http.delete(environment.apiUrls.deleteMetadata + `/` + id);
   }
 
 }

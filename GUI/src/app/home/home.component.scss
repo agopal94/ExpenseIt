@@ -2,3 +2,18 @@
     padding: 10px;
     border-bottom: 1px solid;
 }
+
+.nav-bar-container {
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid;
+}
+
+.view-container {
+    height: calc(100% - 120px);
+
+    div {
+        height: 100%;
+    }
+}
+

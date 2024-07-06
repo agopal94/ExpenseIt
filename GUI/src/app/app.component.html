@@ -1,4 +1,6 @@
-@if (showLoader) {
-    <spinner ngIf="showLoader"></spinner>
-}
-<router-outlet></router-outlet>
+<div style="height: 100%;">
+    @if (showLoader) {
+        <spinner ngIf="showLoader"></spinner>
+    }
+    <router-outlet></router-outlet>
+</div>

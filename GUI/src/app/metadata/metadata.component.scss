@@ -1,0 +1,22 @@
+.metadata-container {
+    height: 100%;
+}
+
+.metadata-grid {
+    height: calc(100% - 20px);
+    padding-top: 10px;
+}
+
+.row, .col-sm-6 {
+    height: 100%;
+}
+
+.create-metadata-container {
+    border: 1px solid;
+    margin-top: 10px;
+    border-radius: 15px;
+}
+
+.metadata-add-form {
+    padding-top:10px;
+}

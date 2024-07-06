@@ -7,6 +7,7 @@ export const environment = {
         createAccount: '/api/account',
         getAllMetadata: '/api/metadata/getall',
         createMetadata: '/api/metadata',
+        deleteMetadata: '/api/metadata',
         getAllTransactions: '/api/transaction/getall',
         createTransaction: '/api/transaction'
     }
